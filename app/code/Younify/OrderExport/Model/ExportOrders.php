@@ -30,10 +30,13 @@ class ExportOrders
    
         $orders = $this->orderCollectionFactory->create()
             ->addFieldToFilter('created_at', ['gteq' => $startDate])
-            ->addFieldToFilter('created_at', ['lteq' => $endDate])
-            ->addFieldToFilter('status', ['in' => $statuses]);
+            ->addFieldToFilter('created_at', ['lteq' => $endDate]);
 
-        if ($group) {
+        if ($statuses && $statuses != null) {
+            $orders->addFieldToFilter('status', ['in' => $statuses]);
+        }
+
+        if ($group && $group != null) {
             $orders->addFieldToFilter('customer_group_id', $group);
         }
 
@@ -60,6 +63,11 @@ class ExportOrders
 
     private function saveCsv($fileName, $data)
     {
+        $exportDir = $this->directoryList->getRoot() . '/var/export';
+        if (!$this->file->isDirectory($exportDir)) {
+            $this->file->createDirectory($exportDir);
+        }
+
         $filePath = $this->directoryList->getRoot() . '/' . $fileName;
 
         $csvData = array_map(function ($fields) {

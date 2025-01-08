@@ -1,0 +1,36 @@
+<form action="<?php echo $this->getUrl('adminform/form/export'); ?>" method="post">
+    <input type="hidden" name="form_key" value="<?php echo $block->escapeHtml($block->getFormKey()); ?>" />
+    
+    <div class="admin__form-field">
+        <label for="start_date">Start Date:</label>
+        <input id="start_date" name="start_date" type="date" class="admin__control-text" required />
+    </div>
+
+    <div class="admin__form-field">
+        <label for="end_date">End Date:</label>
+        <input id="end_date" name="end_date" type="date" class="admin__control-text" required />
+    </div>
+
+    <div class="admin__form-field">
+        <label for="status">Order Status:</label>
+        <select id="status" name="status[]" class="admin__control-select" multiple="multiple">
+            <option value="pending">Pending</option>
+            <option value="complete">Complete</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="canceled">Canceled</option>
+        </select>
+    </div>
+
+    <div class="admin__form-field">
+        <label for="customer_group">Customer Group:</label>
+        <select id="customer_group" name="customer_group" class="admin__control-select">
+            <option value=""></option>
+            <option value="1">General</option>
+            <option value="2">Wholesale</option>
+            <option value="3">Retailer</option>
+        </select>
+    </div>
+
+    <button type="submit" class="action-primary">Export</button>
+</form>
